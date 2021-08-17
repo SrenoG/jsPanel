@@ -1,0 +1,56 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0%;
+    padding: 0%;
+}
+#allElementDiv{
+    width: 100%;
+    top: 0;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.divButton{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 30%;
+}
+
+.textDiv{           
+    border: 1px solid red;
+    width: 80%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+.text{
+    text-align: center;
+}
+#footer{
+    width: 100%;
+    height: 10vh;
+    bottom: 0;
+    position: absolute;
+}
+#divButtonFooter{
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.buttonFooter{
+    height: 50%;
+    width: 10%;
+}

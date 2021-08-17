@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="allElementDiv"></div>
+    <footer id="footer">
+        <div id="divButtonFooter">
+            <button class="buttonFooter" id="textButton">AddText</button>
+            <button class="buttonFooter">test</button>
+            <button class="buttonFooter">test</button>
+            <button class="buttonFooter">test</button>
+        </div>
+    </footer>
+</body>
+<script src="https://kit.fontawesome.com/9113805cc4.js" crossorigin="anonymous"></script>
+<script>    
+    let list = [];
+    let textButton = document.getElementById('textButton');
+    textButton.addEventListener("click", ()=>{addText()}, false);
+    function addText(){
+        let allElementDiv = document.getElementById('allElementDiv');
+        let eltDiv = document.createElement("div");
+
+        let title = document.createElement("h1");
+        title.innerText = "Je test un nouveau texte";
+        
+        let divButton = document.createElement("div");
+        
+        let bUp = document.createElement("button");
+        bUp.innerText = "Up";
+        
+        let bDown = document.createElement("button");
+        bDown.innerText = "Down";
+        
+        let divDelete = document.createElement("div");
+        let buttonDelete = document.createElement("button");
+        buttonDelete.innerText = "DELETE"
+        buttonDelete.addEventListener("click", deleteElt, false);
+        
+        divButton.classList.add('divButton')       
+        eltDiv.classList.add("textDiv");
+        title.classList.add("text");
+        
+        eltDiv.appendChild(title);
+        eltDiv.appendChild(divButton);
+        divButton.appendChild(bUp);
+        divButton.appendChild(bDown);
+        divDelete.appendChild(buttonDelete);
+        eltDiv.appendChild(divDelete);
+        list.push(eltDiv); 
+        loadListOnScreen();    
+    }
+
+    function deleteElt(event){       
+        let index = list.indexOf(this.parentNode.parentNode)
+        console.log(list);
+        console.log(index);
+        list.splice(index,1)
+        loadListOnScreen();
+    }
+
+    function loadListOnScreen()
+    {  
+        let div = document.getElementById('allElementDiv');
+        div.innerHTML = "";
+        list.forEach(element => {
+            div.appendChild(element);
+        });
+        document.body.appendChild(div);
+    }
+</script>
+</html>
