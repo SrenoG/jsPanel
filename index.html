@@ -25,228 +25,26 @@
             <button class="buttonFooter" id="textButton">AddText</button>
             <button class="buttonFooter" id="titleButton">AddTitle</button>
             <button class="buttonFooter" id="myBtn">AddPic</button>
+            <button ondragover="allowDrop(event)" ondrop="onDropDelete(event, this)" class="buttonFooter" id="myBtn">DELETE</button>
         </div>
     </footer>
 </body>
 <!-- <script src="https://kit.fontawesome.com/9113805cc4.js" crossorigin="anonymous"></script> -->
 <script src="jscolor.js"></script>
+<script src="./function/addText.js"></script>
+<script src="./function/addTitle.js"></script>
+<script src="./function/addPicture.js"></script>
+<script src="./function/delete.js"></script>
+<script src="./function/move.js"></script>
+<script src="./function/dragAndDrop.js"></script>
+<script src="./function/refresh.js"></script>
+<script src="./function/modal.js"></script>
 <script>  
-    const color = document.getElementById('colorPicker');
+    const color = document.getElementById('colorPicker')
     color.value = '#000000';
     const list = [];
     const titleDiv = document.getElementById('title');
-    let textButton = document.getElementById('textButton');
-    let titleButton = document.getElementById('titleButton');
-    textButton.addEventListener("click", ()=>{addText()}, false);
-    titleButton.addEventListener("click", ()=>{addTitle()}, false);
-
-    function addText(){
-        let allElementDiv = document.getElementById('allElementDiv');
-        let textDiv = document.createElement("div");
-
-        let title = document.createElement("span");
-        let inputText = document.getElementById('textInput');
-        title.innerText = inputText.value;
-        if(inputText.value == '' || inputText.value == "INSERT SOMETHING")
-        {
-            inputText.value = "INSERT SOMETHING"
-        }
-        else
-        {           
-            title.style.color = color.value;
-            color.value = '#000000';
-            inputText.value = '';
-
-            let divButton = document.createElement("div");
-            
-            let bUp = document.createElement("button");
-            bUp.innerText = "Up";
-            bUp.addEventListener("click", moveUp, false)
-            
-            let bDown = document.createElement("button");
-            bDown.innerText = "Down";
-            bDown.addEventListener("click", moveDown, false)
-            
-            let divDelete = document.createElement("div");
-            let buttonDelete = document.createElement("button");
-            buttonDelete.innerText = "DELETE"
-            buttonDelete.addEventListener("click", deleteElt, false);
-            
-            divButton.classList.add('divButton')       
-            textDiv.classList.add("textDiv", "draggable");
-            title.classList.add("text");
-            
-            textDiv.appendChild(title);
-            textDiv.appendChild(divButton);
-            divButton.appendChild(bUp);
-            divButton.appendChild(bDown);
-            divDelete.appendChild(buttonDelete);
-            textDiv.appendChild(divDelete);
-            list.push(textDiv); 
-            loadListOnScreen();    
-
-        }
-    }
-    
-    function addTitle(){
-        
-        let title = document.createElement("h1");
-        let inputText = document.getElementById('textInput');
-        title.innerText = inputText.value;
-        if(inputText.value == '' || inputText.value == "INSERT SOMETHING")
-        {
-            inputText.value = "INSERT SOMETHING"
-        }
-        else
-        {    
-            let buttonAddTitle = document.getElementById("titleButton").disabled = true;       
-            title.style.color = color.value;
-            color.value = '#000000';
-            inputText.value = '';
-
-            let divButton = document.createElement("div");                    
-            let divDelete = document.createElement("div");
-            let buttonDelete = document.createElement("button");
-            buttonDelete.innerText = "DELETE"
-            buttonDelete.addEventListener("click", deleteTitle, false);
-          
-            titleDiv.classList.add('textDiv');
-            divButton.classList.add('divButton')       
-            title.classList.add("text");
-            
-            divDelete.appendChild(buttonDelete);
-            titleDiv.appendChild(title);
-            titleDiv.appendChild(divDelete);
-            // list.push(titleDiv); 
-            loadListOnScreen();    
-
-        }
-    }
-    
-    function addPicture(){
-        let allElementDiv = document.getElementById('allElementDiv');
-        let textDiv = document.createElement("div");
-        let imgDiv = document.createElement("div");
-        let pic = document.createElement("img");
-        let inputUrl = document.getElementById('inputUrl');
-        pic.src = inputUrl.value;
-        if(inputUrl.value == '')
-        {
-            inputText.value = "INSERT SOMETHING"
-        }
-        else
-        {           
-            let divButton = document.createElement("div");
-            
-            let bUp = document.createElement("button");
-            bUp.innerText = "Up";
-            bUp.addEventListener("click", moveUp, false)
-            
-            let bDown = document.createElement("button");
-            bDown.innerText = "Down";
-            bDown.addEventListener("click", moveDown, false)
-            
-            let divDelete = document.createElement("div");
-            let buttonDelete = document.createElement("button");
-            buttonDelete.innerText = "DELETE"
-            buttonDelete.addEventListener("click", deleteElt, false);
-            
-            pic.classList.add('pictures');
-            divButton.classList.add('divButton')       
-            textDiv.classList.add("textDiv", "draggable");
-            imgDiv.classList.add("imgDiv");
-            
-            imgDiv.appendChild(pic);
-            textDiv.appendChild(imgDiv);
-            textDiv.appendChild(divButton);
-            divButton.appendChild(bUp);
-            divButton.appendChild(bDown);
-            divDelete.appendChild(buttonDelete);
-            textDiv.appendChild(divDelete);
-            list.push(textDiv); 
-            loadListOnScreen();    
-        }
-    }
-
-    function deleteElt(event){       
-        let index = list.indexOf(this.parentNode.parentNode)
-        console.log(index);
-        list.splice(index,1)
-        console.log(list);
-        loadListOnScreen();
-    }
-    function deleteTitle(event){
-        let buttonAddTitle = document.getElementById("titleButton").disabled = false;     
-        // let index = list.indexOf(this.parentNode)
-        // list.splice(index,1)
-        document.getElementById('title').innerHTML = '';
-        loadListOnScreen();
-    }
-
-    function moveUp(event)
-    {
-        let index = list.indexOf(this.parentNode.parentNode)       
-        if(index > 0)
-        {
-            arraymove(list, index, index - 1);           
-        };
-        loadListOnScreen(); 
-    }
-
-    function moveDown(event)
-    {
-        let index = list.indexOf(this.parentNode.parentNode)       
-        if(index < list.length)
-        {
-            arraymove(list, index, index + 1);           
-        };
-        loadListOnScreen(); 
-    }
-
-    function arraymove(arr, fromIndex, toIndex) {
-                var element = arr[fromIndex];
-                arr.splice(fromIndex, 1);
-                arr.splice(toIndex, 0, element);
-            }
-
-    function loadListOnScreen()
-    {  
-        let div = document.getElementById('allElementDiv');
-        div.innerHTML = "";
-        // let titleDiv = document.createElement('div');
-        // titleDiv.id = "title";
-        // div.appendChild(titleDiv);
-        list.forEach(element => {
-            div.appendChild(element);
-        });
-        document.body.appendChild(div);
-    }
-
-    // Modal
-    // Get the modal
-    var modal = document.getElementById("myModal");
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    // When the user clicks on the button, open the modal
-    btn.onclick = function() {
-    modal.style.display = "block";
-    }
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-    modal.style.display = "none";
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-    } 
-
-    let inputUrl = document.getElementById('addUrlImg');
-    inputUrl.addEventListener('click', (x) => {
-        addPicture();
-    })
+    document.getElementById('textButton').addEventListener("click", ()=>{addText()}, false);
+    document.getElementById('titleButton').addEventListener("click", ()=>{addTitle()}, false);
 </script>
 </html>
